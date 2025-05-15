@@ -16,7 +16,7 @@ public class SeverApplication {
 	@Bean
 	public TcpNetServerConnectionFactory severConnection(){
 		TcpNetServerConnectionFactory factory = new TcpNetServerConnectionFactory(5000);
-
+		factory.setSingleUse(false);
 		return factory;
 	}
 
@@ -32,15 +32,18 @@ public class SeverApplication {
     public MessageChannel inputChannel() {
         return new DirectChannel();
     }
+
+	@Bean
+	public MessageChannel outputChannel(){
+		return new DirectChannel();
+	}
     
     @ServiceActivator(inputChannel = "inputChannel")
     public void handleMessage(Message<byte[]> message) {
-        // Process the received message
         System.out.println("Received: " + new String(message.getPayload()));
     }
 
 	public static void main(String[] args) {
-		
 		SpringApplication.run(SeverApplication.class, args);
 	}
 

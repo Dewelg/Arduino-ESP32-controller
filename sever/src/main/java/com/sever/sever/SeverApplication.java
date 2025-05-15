@@ -5,7 +5,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.integration.annotation.ServiceActivator;
 import org.springframework.integration.channel.DirectChannel;
-import org.springframework.integration.ip.config.TcpConnectionFactoryFactoryBean;
 import org.springframework.integration.ip.tcp.TcpReceivingChannelAdapter;
 import org.springframework.integration.ip.tcp.TcpSendingMessageHandler;
 import org.springframework.integration.ip.tcp.connection.TcpNetServerConnectionFactory;
@@ -40,14 +39,19 @@ public class SeverApplication {
 		return new DirectChannel();
 	}
 
-	@Bean 
-	public TcpSendingMessageHandler outbound( ){
-		
+	@Bean
+	@ServiceActivator(inputChannel = "outputChannel")
+	public TcpSendingMessageHandler outbound(TcpNetServerConnectionFactory connectionFactory){
+		TcpSendingMessageHandler handler = new TcpSendingMessageHandler();
+		handler.setConnectionFactory(connectionFactory);
+		return handler;
 	}
     
     @ServiceActivator(inputChannel = "inputChannel")
     public void handleMessage(Message<byte[]> message) {
         System.out.println("Received: " + new String(message.getPayload()));
+
+		
     }
 
 	public static void main(String[] args) {

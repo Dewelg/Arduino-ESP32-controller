@@ -1,0 +1,19 @@
+{
+	"folders": [
+		{
+			"name": "Arduino-ESP32-controller",
+			"path": "../.."
+		},
+		{
+			"name": "esp-spi",
+			"path": ".."
+		},
+		{
+			"name": "ardunio-spi",
+			"path": "../../ardunio-spi"
+		}
+	],
+	"settings": {
+		"java.compile.nullAnalysis.mode": "automatic"
+	}
+}

@@ -4,9 +4,9 @@
 #include <SPI.h>
 
 //declarations
-const char* id = "SecrectService";
+const char* id = "";
 const char* password = "";
-const char* host = "192.168.137.1";
+const char* host = "";
 const int port = 5000;
 
 WiFiClient client;

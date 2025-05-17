@@ -2,6 +2,7 @@
 #include <WiFi.h>
 #include <WiFiClient.h>
 #include <SPI.h>
+#include <WiFiManager.h>
 
 //declarations
 const char* id = "";
@@ -10,7 +11,6 @@ const char* host = "";
 const int port = 5000;
 
 WiFiClient client;
-
 
 void setup() {
   Serial.begin(115200);
@@ -26,15 +26,17 @@ void setup() {
 }
 
 void loop() {
-  if(client.connect(host, port)){
-    Serial.println("Connected to sever");
-    client.print("Hello from ESP32");
-    String response = client.readStringUntil('\n');
-    Serial.println("Response from sever: " + response);
-    client.stop();
-  } else{
-    Serial.println("Connection Failed");
-    delay(5000);
+  if(!client.connected()){
+    if(client.connect(host, port)){
+      Serial.println("Connected to sever");
+      client.print("Hello from ESP32");
+      String response = client.readStringUntil('\n');
+      Serial.println("Response from sever: " + response);
+      client.stop();
+    } else {
+      Serial.println("Connection Failed");
+      delay(5000);
+    }
   }
 }
 

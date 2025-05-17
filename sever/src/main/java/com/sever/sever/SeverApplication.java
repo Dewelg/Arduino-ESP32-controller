@@ -12,6 +12,8 @@ import org.springframework.integration.support.MessageBuilder;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.MessageChannel;
 
+import org.springframework.messaging.MessageHandler;
+
 @SpringBootApplication
 public class SeverApplication {
 
@@ -50,24 +52,28 @@ public class SeverApplication {
     
 	@Bean
     @ServiceActivator(inputChannel = "inputChannel")
-    public void handleMessage(Message<byte[]> message) {
-		//Message from esp32
-        System.out.println("Received: " + new String(message.getPayload()));
+    public MessageHandler handleMessage() {
+		return message -> {
+			//Message from esp32
+			String recieved = new String((byte[]) message.getPayload());
+			System.out.println("Received: " + recieved);
 
-		//repsone message 
-		String response = "Message Recived";
+			//repsone message 
+			String response = "Message Recived";
 
-		//retain connection made from message
-		Object connectionID = message.getHeaders().get("ip_tcp_connectionID");
+			//retain connection made from message
+			Object connectionID = message.getHeaders().get("ip_tcp_connectionId");
 
-		//wrap payload in byte array and send to esp32
-		if(connectionID != null){
-			Message<byte[]> reply = MessageBuilder.withPayload(response.getBytes())
-			.setHeader("ip_tcp_connectionID", connectionID)
-			.build();
+			//wrap payload in byte array and send to esp32
+			if(connectionID != null){
+				Message<byte[]> reply = MessageBuilder.withPayload(response.getBytes())
+				.setHeader("ip_tcp_connectionId", connectionID)
+				.build();
 
-			outputChannel().send(reply);
-		}
+				outputChannel().send(reply);
+			}
+		
+		};
 		
 		
     }

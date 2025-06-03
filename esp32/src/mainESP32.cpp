@@ -2,7 +2,7 @@
 #include <WiFi.h>
 #include <WiFiClient.h>
 #include <SPI.h>
-#include <WiFiManager.h>
+// #include <WiFiManager.h>
 
 //declarations
 const char* id = "";

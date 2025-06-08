@@ -29,9 +29,11 @@ void loop() {
   if(!client.connected()){
     if(client.connect(host, port)){
       Serial.println("Connected to sever");
-      client.print("Hello from ESP32");
+      client.println("Hello from ESP32");
       String response = client.readStringUntil('\n');
+      client.flush();
       Serial.println("Response from sever: " + response);
+      delay(100);
       client.stop();
     } else {
       Serial.println("Connection Failed");

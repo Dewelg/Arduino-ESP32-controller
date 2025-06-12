@@ -3,14 +3,16 @@
 #include <Servo.h>
 
 //declarations
+Servo servo;
 
-
+const char targetMsg[] = "Servo on";
 
 void setup() {
   Serial.begin(115200);
 
-  SPI.begin();
-  pinMode(53, OUTPUT);
+  servo.attach(3);
+  
+  pinMode(53, INPUT_PULLUP);
 }
 
 void loop() {

@@ -20,7 +20,7 @@ public class Server {
 
                 OutputStream outputStream = sever.getOutputStream();
                 PrintWriter printWriter = new PrintWriter(outputStream, true);
-                printWriter.println("Response received");
+                printWriter.println("Servo On");
             }
         }
 

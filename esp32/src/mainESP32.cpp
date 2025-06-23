@@ -1,7 +1,7 @@
 #include <Arduino.h>
 #include <WiFi.h>
+ 
 
-//declarations
 const char* id = "";
 const char* password = "";
 const char* host = "";
@@ -22,8 +22,6 @@ void setup() {
   }
 
   Serial.print("Wifi Connected");
-
-
 }
 
 void loop() {
@@ -42,6 +40,8 @@ void loop() {
       Serial2.write(response.c_str());
 
       client.stop();
+
+      delay(15);
     } else {
       Serial.println("Connection Failed");
       delay(5000);

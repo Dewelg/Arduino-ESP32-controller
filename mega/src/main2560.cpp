@@ -13,20 +13,23 @@ void setup() {
 
 void loop() {
   if(Serial1.available()){
-    //check if its servo message
     String msg = Serial1.readStringUntil('\n');
     msg.trim();
-    Serial.println("From ESP32: " + msg);
+    Serial.println(msg);
+    //check if its servo message
     if(msg.equals(targetMsg)){
       for(int pos = 0; pos<=180;pos++){
+        Serial.println("Front" + String(pos)); //debugging
         servo.write(pos);
-        delay(1000);
+        delay(15);
       }
 
       for(int pos = 180; pos>=0;pos--){
+        Serial.println("Back" + String(pos)); //debugging
         servo.write(pos);
-        delay(1000);
+        delay(15);
       }
+      delay(15);
     }
   }else{
     Serial.println("Unknown message");

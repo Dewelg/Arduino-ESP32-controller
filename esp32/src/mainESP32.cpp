@@ -33,6 +33,7 @@ void loop() {
 
       //Recieve sever message and print message
       String response = client.readStringUntil('\n');
+      response.trim();
       client.flush();
       Serial.println("Response from sever: " + response);
 
@@ -41,7 +42,7 @@ void loop() {
 
       client.stop();
 
-      delay(15);
+      delay(1000);
     } else {
       Serial.println("Connection Failed");
       delay(5000);
